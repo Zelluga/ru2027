@@ -434,6 +434,7 @@ export async function onRequest(context) {
     return await handleApi(context.request, context.env);
   } catch (err) {
     console.error('Ошибка /api:', err);
-    return sendError(500, 'INTERNAL', 'Внутренняя ошибка сервера');
+    const detail = err && err.message ? err.message : String(err);
+    return sendError(500, 'INTERNAL', 'Внутренняя ошибка сервера: ' + detail);
   }
 }
