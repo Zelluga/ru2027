@@ -130,14 +130,14 @@ async function validateInitData(initData, env) {
 
 /* ---------- D1: схема и сид ---------- */
 async function ensureSchema(env) {
-  await env.DB.exec(`
-    CREATE TABLE IF NOT EXISTS tabs (
+  await env.DB.prepare(`CREATE TABLE IF NOT EXISTS tabs (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL COLLATE NOCASE UNIQUE,
       created_by_tg_id INTEGER NOT NULL DEFAULT 0,
       created_at TEXT NOT NULL
-    );
-    CREATE TABLE IF NOT EXISTS expenses (
+    )`).run();
+
+  await env.DB.prepare(`CREATE TABLE IF NOT EXISTS expenses (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       tab_id INTEGER NOT NULL,
       title TEXT NOT NULL,
@@ -146,9 +146,9 @@ async function ensureSchema(env) {
       comment TEXT NOT NULL DEFAULT '',
       created_by_tg_id INTEGER NOT NULL,
       created_at TEXT NOT NULL
-    );
-    CREATE INDEX IF NOT EXISTS idx_expenses_tab ON expenses(tab_id);
-  `);
+    )`).run();
+
+  await env.DB.prepare(`CREATE INDEX IF NOT EXISTS idx_expenses_tab ON expenses(tab_id)`).run();
 
   const countRow = await env.DB.prepare('SELECT COUNT(*) AS c FROM tabs').first();
   if (Number(countRow.c) === 0) {
