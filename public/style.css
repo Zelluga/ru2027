@@ -1,0 +1,594 @@
+/* ===== Telegram Mini App «2027» — стили фронтенда =====
+   Пилюльный дизайн (pill-UI), светлая/тёмная тема через CSS-переменные.
+   Переменные темы задаются в JS из Telegram themeParams; ниже — дефолт (светлая). */
+
+:root {
+  /* Дефолт — светлая тема (если запущено вне Telegram) */
+  --bg: #f2f2f7;
+  --text: #1c1c1e;
+  --hint: #8e8e93;
+  --button: #007aff;
+  --button-text: #ffffff;
+  --secondary-bg: #ffffff;
+  --link: #007aff;
+
+  /* Производные цвета */
+  --card: #ffffff;
+  --border: rgba(60, 60, 67, 0.12);
+  --danger: #ff3b30;
+  --danger-soft: rgba(255, 59, 48, 0.10);
+  --success-soft: rgba(52, 199, 89, 0.12);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.10);
+
+  --radius-pill: 999px;
+  --radius-card: 20px;
+  --min-tap: 44px;
+  --gutter: 16px;
+
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  --bg: #000000;
+  --text: #ffffff;
+  --hint: #98989f;
+  --button: #2ea6ff;
+  --button-text: #ffffff;
+  --secondary-bg: #1c1c1e;
+  --link: #64d2ff;
+
+  --card: #1c1c1e;
+  --border: rgba(255, 255, 255, 0.12);
+  --danger: #ff453a;
+  --danger-soft: rgba(255, 69, 58, 0.16);
+  --success-soft: rgba(48, 209, 88, 0.16);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.5);
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.4;
+  min-height: 100vh;
+  padding: 0 var(--gutter);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* ===== Шапка ===== */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(14px + env(safe-area-inset-top)) 0 10px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.app-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.app-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--hint);
+}
+
+.owner-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--button);
+  background: var(--success-soft);
+  border: 1px solid var(--border);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+}
+
+/* ===== Панель вкладок ===== */
+.tabs-section {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 4px 0 12px;
+}
+
+.tabs-scroll {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tabs-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.tabs-list {
+  display: flex;
+  gap: 8px;
+  padding: 2px;
+  width: max-content;
+}
+
+.tab-chip {
+  min-height: var(--min-tap);
+  padding: 10px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--secondary-bg);
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease, border-color 0.2s ease;
+}
+
+.tab-chip:active {
+  transform: scale(0.97);
+}
+
+.tab-chip.active {
+  background: var(--button);
+  color: var(--button-text);
+  border-color: transparent;
+}
+
+.tabs-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.pill-btn {
+  min-height: var(--min-tap);
+  padding: 10px 18px;
+  border-radius: var(--radius-pill);
+  border: 1px dashed var(--border);
+  background: transparent;
+  color: var(--link);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.pill-btn:active {
+  background: var(--secondary-bg);
+}
+
+.pill-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  color: var(--hint);
+}
+
+.icon-btn {
+  width: var(--min-tap);
+  height: var(--min-tap);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--secondary-bg);
+  color: var(--text);
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.icon-btn:active {
+  background: var(--border);
+}
+
+/* ===== Карточки ===== */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-md);
+}
+
+/* ===== Форма ===== */
+.expense-form {
+  max-width: 520px;
+  margin: 0 auto 16px;
+  padding: 14px;
+}
+
+.expense-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.field {
+  min-height: var(--min-tap);
+  padding: 11px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--secondary-bg);
+  color: var(--text);
+  font-size: 16px;
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.field::placeholder {
+  color: var(--hint);
+}
+
+.field:focus {
+  outline: none;
+  border-color: var(--button);
+  box-shadow: 0 0 0 2px var(--button);
+}
+
+select.field {
+  cursor: pointer;
+}
+
+.form-error {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ===== Кнопки ===== */
+.btn {
+  min-height: var(--min-tap);
+  padding: 11px 20px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.1s ease, background-color 0.2s ease;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--button);
+  color: var(--button-text);
+}
+
+.btn-secondary {
+  background: var(--secondary-bg);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: #ffffff;
+}
+
+/* ===== Список записей ===== */
+.expenses-section {
+  max-width: 520px;
+  margin: 0 auto;
+  padding-bottom: 16px;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--hint);
+  padding: 28px 16px;
+  font-size: 15px;
+}
+
+.expenses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.expense-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-sm);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: card-in 0.25s ease;
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.expense-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.expense-title {
+  font-size: 16px;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.expense-amount {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--button);
+  white-space: nowrap;
+}
+
+.expense-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  font-size: 13px;
+  color: var(--hint);
+}
+
+.expense-meta .payer {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.expense-comment {
+  font-size: 14px;
+  color: var(--hint);
+  word-break: break-word;
+}
+
+.expense-delete {
+  align-self: flex-end;
+  min-height: 36px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.expense-delete:active {
+  background: var(--danger);
+  color: #fff;
+}
+
+/* ===== Итоги ===== */
+.totals {
+  position: sticky;
+  bottom: 0;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 12px 0 calc(12px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  background: var(--bg);
+}
+
+.total-badge {
+  padding: 9px 16px;
+  border-radius: var(--radius-pill);
+  background: var(--secondary-bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+}
+
+.total-badge--main {
+  background: var(--button);
+  color: var(--button-text);
+  border-color: transparent;
+}
+
+/* ===== Модальное окно ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--gutter);
+  z-index: 100;
+  animation: fade-in 0.2s ease;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal {
+  width: 100%;
+  max-width: 380px;
+  max-height: 86vh;
+  overflow-y: auto;
+  padding: 20px;
+  animation: pop-in 0.2s ease;
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-title {
+  margin: 0 0 14px;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.field-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--hint);
+}
+
+.modal-message {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.modal-actions .btn {
+  flex: 1;
+}
+
+/* Кнопки-пункты меню вкладки */
+.menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menu-item {
+  min-height: var(--min-tap);
+  padding: 12px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--secondary-bg);
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.2s ease;
+}
+
+.menu-item:active {
+  background: var(--border);
+}
+
+.menu-item--danger {
+  color: var(--danger);
+}
+
+/* ===== Toast ===== */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  background: var(--text);
+  color: var(--bg);
+  padding: 12px 20px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: var(--shadow-md);
+  z-index: 200;
+  max-width: 90vw;
+  text-align: center;
+  animation: pop-in 0.2s ease;
+}
+
+/* ===== Фатальная ошибка ===== */
+.fatal-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--gutter);
+  z-index: 300;
+}
+
+.fatal-card {
+  width: 100%;
+  max-width: 380px;
+  padding: 24px;
+  text-align: center;
+}
+
+.fatal-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.fatal-message {
+  color: var(--hint);
+  margin-bottom: 18px;
+}
+
+/* ===== Утилиты ===== */
+.hidden {
+  display: none !important;
+}

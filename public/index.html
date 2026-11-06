@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#f2f2f7" />
+  <title>2027</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Telegram WebApp SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <!-- Заголовок приложения -->
+  <header class="app-header">
+    <h1 class="app-title">2027</h1>
+    <div class="app-user" id="app-user"></div>
+  </header>
+
+  <!-- Панель вкладок -->
+  <section class="tabs-section">
+    <div class="tabs-scroll" id="tabs-scroll">
+      <div class="tabs-list" id="tabs-list" role="tablist"></div>
+    </div>
+    <div class="tabs-toolbar">
+      <button type="button" class="pill-btn add-tab-btn" id="add-tab-btn">+ Добавить вкладку</button>
+      <button type="button" class="icon-btn" id="tab-actions-btn" aria-label="Действия с вкладкой" hidden>⋮</button>
+    </div>
+  </section>
+
+  <!-- Форма добавления записи -->
+  <section class="expense-form card" aria-label="Добавить запись">
+    <form id="expense-form" autocomplete="off" novalidate>
+      <input type="text" id="title-input" class="field" placeholder="Наименование" maxlength="200" />
+      <input type="number" id="amount-input" class="field" placeholder="Стоимость, ₽" step="0.01" min="0" inputmode="decimal" />
+      <select id="payer-select" class="field">
+        <option value="Денис">Денис</option>
+        <option value="Алексей">Алексей</option>
+        <option value="Кирилл">Кирилл</option>
+      </select>
+      <input type="text" id="comment-input" class="field" placeholder="Комментарий (необязательно)" maxlength="500" />
+      <button type="submit" class="btn btn-primary submit-btn">Добавить запись</button>
+    </form>
+    <div class="form-error hidden" id="form-error" role="alert"></div>
+  </section>
+
+  <!-- Список записей -->
+  <main class="expenses-section">
+    <div class="empty-state hidden" id="empty-state">Записей пока нет</div>
+    <div class="expenses-list" id="expenses-list"></div>
+  </main>
+
+  <!-- Итоги по активной вкладке -->
+  <footer class="totals" id="totals">
+    <div class="total-badge total-badge--main" id="badge-total">Общая сумма —</div>
+    <div class="total-badge" id="badge-denis">Денис —</div>
+    <div class="total-badge" id="badge-alexey">Алексей —</div>
+    <div class="total-badge" id="badge-kirill">Кирилл —</div>
+  </footer>
+
+  <!-- Модальное окно -->
+  <div class="modal-overlay hidden" id="modal-overlay">
+    <div class="modal card" role="dialog" aria-modal="true">
+      <h2 class="modal-title" id="modal-title"></h2>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-actions" id="modal-actions"></div>
+    </div>
+  </div>
+
+  <!-- Всплывающее уведомление -->
+  <div class="toast hidden" id="toast" role="status"></div>
+
+  <!-- Фатальная ошибка (например, 401) -->
+  <div class="fatal-overlay hidden" id="fatal-overlay">
+    <div class="fatal-card card">
+      <div class="fatal-title" id="fatal-title">Ошибка</div>
+      <div class="fatal-message" id="fatal-message"></div>
+      <button type="button" class="btn btn-primary" id="fatal-retry">Повторить</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

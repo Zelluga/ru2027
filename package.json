@@ -1,0 +1,14 @@
+{
+  "name": "mini-app-2027",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Telegram Mini App «2027» — совместный учёт расходов группы до 6 человек",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=22.13"
+  }
+}
